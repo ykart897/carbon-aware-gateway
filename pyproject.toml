@@ -1,0 +1,12 @@
+[project]
+name = "carbon-aware-gateway"
+version = "3.0.0"
+description = "Reproducible carbon-aware routing research demo"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+extend-exclude = [".python", ".docker-cli", ".venv*", "experiments/results"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

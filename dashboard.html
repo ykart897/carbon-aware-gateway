@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbon-Aware Gateway — Phase 1 Demo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+<div class="topbar">
+  <i class="ti ti-leaf" style="font-size:19px;color:var(--g)"></i>
+  <div><h1>Carbon-Aware API Gateway &nbsp;<span style="font-weight:400;color:#64748b">Phase 1 Demo</span></h1>
+  <div class="topbar-sub">COMP 4206 Cloud Computing &nbsp;·&nbsp; Konya Food & Agriculture University &nbsp;·&nbsp; Sample data / optional live providers</div></div>
+  <div class="live-wrap"><div class="live-dot"></div><span class="live-txt" id="live-txt">Connecting...</span></div>
+</div>
+
+<div class="page">
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="kl">Total requests</div><div class="kv" id="k-total">—</div><div class="ks">all schedulers</div></div>
+  <div class="kpi"><div class="kl">Estimated savings</div><div class="kv" id="k-saved" style="color:var(--g)">—</div><div class="ks">vs round-robin baseline</div></div>
+  <div class="kpi"><div class="kl">Avg carbon</div><div class="kv" id="k-carbon">—</div><div class="ks">gCO₂/kWh, current successful records</div></div>
+  <div class="kpi"><div class="kl">Avg latency</div><div class="kv" id="k-lat">—</div><div class="ks">current successful records</div></div>
+  <div class="kpi"><div class="kl">Recommendations</div><div class="kv" id="k-defer" style="color:var(--p)">—</div><div class="ks">not executed later</div></div>
+</div>
+<div id="metrics-info" class="info-row"></div>
+<div id="panel-errors" role="status"></div>
+
+<div class="rg" id="rg"></div>
+
+<div class="r3">
+  <div class="card">
+    <div class="ct"><i class="ti ti-math-function"></i>Optimization model</div>
+    <div class="formula">Score = 0.7 · C<sub>norm</sub> + 0.3 · L<sub>norm</sub></div>
+    <div class="info-row">
+      <b style="color:#0f172a">Weighted sum</b> — balanced routing<br>
+      <b style="color:#0f172a">Pareto front</b> — dominance analysis<br>
+      <b style="color:#0f172a">ε-constraint</b> — estimated base latency target ≤ 150ms<br>
+      <b style="color:#0f172a">Deferral suggestion</b> — suggest if CO₂ &gt; 400
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><i class="ti ti-chart-line"></i>ARIMA(2,1,1) forecast — IE</div>
+    <div class="fc-cols" id="fc-cols"></div>
+    <div style="margin-top:7px;font-size:10px;color:#94a3b8"><span id="forecast-info">Loading forecast metadata</span></div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><i class="ti ti-terminal-2"></i>Live demo — send request</div>
+    <div class="demo-section">
+      <div style="font-size:11px;color:#64748b;margin-bottom:2px">Function type:</div>
+      <div class="btn-group" id="ft-btns">
+        <button type="button" class="pill active-ft" data-v="standard">Standard</button>
+        <button type="button" class="pill" data-v="latency_sensitive">Latency-sensitive</button>
+        <button type="button" class="pill" data-v="delay_tolerant">Delay-tolerant</button>
+      </div>
+      <div style="font-size:11px;color:#64748b;margin-top:4px;margin-bottom:2px">Scheduler:</div>
+      <div class="btn-group" id="sc-btns">
+        <button type="button" class="pill active-ca" data-v="carbon_aware">Carbon-aware</button>
+        <button type="button" class="pill" data-v="round_robin">Round-robin</button>
+        <button type="button" class="pill" data-v="latency_only">Latency-only</button>
+      </div>
+      <label for="opt-method">Optimization method</label>
+<select id="opt-method"><option value="weighted_sum">Weighted sum</option><option value="pareto">Pareto front</option><option value="epsilon">Epsilon constraint</option></select>
+<div class="result-box" role="status" id="result-box" style="margin-top:6px">Choose type + scheduler, then click route.</div>
+      <button class="demo-btn" id="route-btn">
+        <i class="ti ti-player-play" style="font-size:13px"></i> Route request
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="r2">
+  <div class="card">
+    <div class="ct"><i class="ti ti-chart-bar"></i>Scheduler comparison — avg CO₂ (gCO₂/kWh)</div>
+    <div id="sched-bars"><div style="color:#94a3b8;font-size:12px">Send requests to see comparison...</div></div>
+  </div>
+  <div class="card">
+    <div class="ct"><i class="ti ti-server"></i>OpenWhisk cluster status</div>
+    <div class="table-scroll"><table class="tbl" id="cl-tbl">
+      <thead><tr><th>Region</th><th>Label</th><th>Active</th><th>Capacity</th><th>Total</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct"><i class="ti ti-list"></i>Recent routing decisions</div>
+  <div class="table-scroll"><table class="tbl">
+    <thead><tr>
+      <th>Timestamp</th><th>Action</th><th>Type</th><th>Scheduler</th>
+      <th>Region</th><th style="text-align:right">CO₂</th>
+      <th style="text-align:right">Latency</th><th style="text-align:right">Estimated savings</th>
+      <th>Mode</th><th>Outcome / backend</th>
+    </tr></thead>
+    <tbody id="lb"></tbody>
+  </table></div>
+</div>
+
+</div>
+
+<script src="/static/dashboard.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+{
+  "schema_version": 3,
+  "experiment_setup": {
+    "seed": 42,
+    "samples": 50,
+    "backend": "simulation",
+    "start_utc": "2026-01-05T00:00:00+00:00",
+    "data_source": "CSV repeated sample profile",
+    "paired_design": "same workload, snapshot and random draws across strategies",
+    "limitations": "Synthetic profile; simulated latency; correlated hourly samples; exploratory unadjusted paired p-values; no measured energy or realized deferral savings."
+  },
+  "scheduler_summary": [
+    {
+      "scheduler": "carbon_aware",
+      "function_type": "standard",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 71.67,
+      "mean_latency_ms": 46.94299999999999,
+      "estimated_saved_g": 12.07216,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "carbon_aware",
+      "function_type": "latency_sensitive",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 71.67,
+      "mean_latency_ms": 44.231,
+      "estimated_saved_g": 12.07216,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "carbon_aware",
+      "function_type": "delay_tolerant",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 71.67,
+      "mean_latency_ms": 52.257200000000005,
+      "estimated_saved_g": 12.07216,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "round_robin",
+      "function_type": "standard",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 311.20599999999996,
+      "mean_latency_ms": 69.66779999999999,
+      "estimated_saved_g": 0.09536,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "round_robin",
+      "function_type": "latency_sensitive",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 311.20599999999996,
+      "mean_latency_ms": 66.95620000000001,
+      "estimated_saved_g": 0.09536,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "round_robin",
+      "function_type": "delay_tolerant",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 311.20599999999996,
+      "mean_latency_ms": 78.4316,
+      "estimated_saved_g": 0.09536,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "latency_only",
+      "function_type": "standard",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 396.88599999999997,
+      "mean_latency_ms": 54.2766,
+      "estimated_saved_g": -4.18868,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "latency_only",
+      "function_type": "latency_sensitive",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 396.88599999999997,
+      "mean_latency_ms": 51.564400000000006,
+      "estimated_saved_g": -4.18868,
+      "recommendations": 0
+    },
+    {
+      "scheduler": "latency_only",
+      "function_type": "delay_tolerant",
+      "requests": 50,
+      "successful": 50,
+      "mean_carbon": 396.88599999999997,
+      "mean_latency_ms": 57.915199999999984,
+      "estimated_saved_g": -4.18868,
+      "recommendations": 0
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "function_type": "standard",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -6.975758865596153,
+      "p_value": 7.232779934674739e-09,
+      "mean_difference": -239.53600000000003,
+      "reason": null
+    },
+    {
+      "function_type": "standard",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -3.5320602331898203,
+      "p_value": 0.0009094589565198661,
+      "mean_difference": -22.724800000000002,
+      "reason": null
+    },
+    {
+      "function_type": "standard",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -89.26643209056215,
+      "p_value": 6.557826283924623e-56,
+      "mean_difference": -325.216,
+      "reason": null
+    },
+    {
+      "function_type": "standard",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -1.506173481430712,
+      "p_value": 0.13844263115957697,
+      "mean_difference": -7.333600000000001,
+      "reason": null
+    },
+    {
+      "function_type": "latency_sensitive",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -6.975758865596153,
+      "p_value": 7.232779934674739e-09,
+      "mean_difference": -239.53600000000003,
+      "reason": null
+    },
+    {
+      "function_type": "latency_sensitive",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -3.5321594824466995,
+      "p_value": 0.0009091874695697639,
+      "mean_difference": -22.7252,
+      "reason": null
+    },
+    {
+      "function_type": "latency_sensitive",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -89.26643209056215,
+      "p_value": 6.557826283924623e-56,
+      "mean_difference": -325.216,
+      "reason": null
+    },
+    {
+      "function_type": "latency_sensitive",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -1.5061732378435564,
+      "p_value": 0.13844269353352154,
+      "mean_difference": -7.333399999999999,
+      "reason": null
+    },
+    {
+      "function_type": "delay_tolerant",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -6.975758865596153,
+      "p_value": 7.232779934674739e-09,
+      "mean_difference": -239.53600000000003,
+      "reason": null
+    },
+    {
+      "function_type": "delay_tolerant",
+      "first": "carbon_aware",
+      "second": "round_robin",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -3.9750325912186253,
+      "p_value": 0.00023109767827933674,
+      "mean_difference": -26.174400000000002,
+      "reason": null
+    },
+    {
+      "function_type": "delay_tolerant",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "carbon",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -89.26643209056215,
+      "p_value": 6.557826283924623e-56,
+      "mean_difference": -325.216,
+      "reason": null
+    },
+    {
+      "function_type": "delay_tolerant",
+      "first": "carbon_aware",
+      "second": "latency_only",
+      "metric": "latency",
+      "n": 50,
+      "test": "scipy.stats.ttest_rel",
+      "t_statistic": -1.156549163074556,
+      "p_value": 0.25306418859079155,
+      "mean_difference": -5.6579999999999995,
+      "reason": null
+    }
+  ],
+  "forecasting": {
+    "DE": {
+      "arima": {
+        "model_used": "ARIMA(2,1,1)",
+        "mae": 34.683,
+        "rmse": 39.466,
+        "fallback_reason": null
+      },
+      "prophet": {
+        "model_used": "prophet",
+        "mae": 72.067,
+        "rmse": 78.168,
+        "fallback_reason": null
+      }
+    },
+    "IE": {
+      "arima": {
+        "model_used": "ARIMA(2,1,1)",
+        "mae": 50.283,
+        "rmse": 54.825,
+        "fallback_reason": null
+      },
+      "prophet": {
+        "model_used": "prophet",
+        "mae": 49.65,
+        "rmse": 63.917,
+        "fallback_reason": null
+      }
+    },
+    "FR": {
+      "arima": {
+        "model_used": "ARIMA(2,1,1)",
+        "mae": 15.4,
+        "rmse": 18.685,
+        "fallback_reason": null
+      },
+      "prophet": {
+        "model_used": "prophet",
+        "mae": 33.017,
+        "rmse": 36.201,
+        "fallback_reason": null
+      }
+    },
+    "PL": {
+      "arima": {
+        "model_used": "ARIMA(2,1,1)",
+        "mae": 41.45,
+        "rmse": 47.996,
+        "fallback_reason": null
+      },
+      "prophet": {
+        "model_used": "prophet",
+        "mae": 90.017,
+        "rmse": 97.669,
+        "fallback_reason": null
+      }
+    }
+  }
+}

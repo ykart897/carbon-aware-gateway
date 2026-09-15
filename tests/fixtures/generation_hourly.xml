@@ -1,0 +1,19 @@
+<GL_MarketDocument xmlns="urn:iec62325.351:tc57wg16:451-6:generationloaddocument:3:0">
+  <type>A75</type>
+  <TimeSeries>
+    <businessType>A01</businessType><inBiddingZone_Domain.mRID>TEST</inBiddingZone_Domain.mRID>
+    <quantity_Measure_Unit.name>MAW</quantity_Measure_Unit.name><curveType>A01</curveType>
+    <MktPSRType><psrType>B16</psrType></MktPSRType>
+    <Period><timeInterval><start>2026-09-15T23:00Z</start><end>2026-09-16T00:00Z</end></timeInterval>
+      <resolution>PT60M</resolution><Point><position>1</position><quantity>100</quantity></Point>
+    </Period>
+  </TimeSeries>
+  <TimeSeries>
+    <businessType>A01</businessType><inBiddingZone_Domain.mRID>TEST</inBiddingZone_Domain.mRID>
+    <quantity_Measure_Unit.name>MAW</quantity_Measure_Unit.name><curveType>A01</curveType>
+    <MktPSRType><psrType>B05</psrType></MktPSRType>
+    <Period><timeInterval><start>2026-09-15T23:00Z</start><end>2026-09-16T00:00Z</end></timeInterval>
+      <resolution>PT60M</resolution><Point><position>1</position><quantity>100</quantity></Point>
+    </Period>
+  </TimeSeries>
+</GL_MarketDocument>

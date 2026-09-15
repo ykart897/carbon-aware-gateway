@@ -1,0 +1,8 @@
+# Optional local equivalent of the CI checks. The application itself needs no Docker.
+services:
+  verify:
+    image: python:3.12-slim
+    working_dir: /work
+    volumes:
+      - .:/source:ro
+    command: python /source/scripts/verify_linux.py

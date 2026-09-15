@@ -1,0 +1,50 @@
+name: Python checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      ENTSOE_API_KEY: ''
+      ELECTRICITY_MAPS_API_KEY: ''
+      USE_LIVE_API: 'false'
+      OPENWHISK_REAL: 'false'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements*.txt
+            requirements*.lock
+      - name: Install core only
+        run: python -m pip install -r requirements-core.lock
+      - name: Core tests without optional models
+        run: python -m unittest discover -s tests -v
+      - name: Real HTTP startup and routing
+        run: python tests/smoke_server.py
+      - name: Install experiment and lint dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Full tests
+        run: python -m unittest discover -s tests -v
+      - name: Ruff
+        run: python -m ruff check .
+      - name: Generate experiment artifacts
+        run: |
+          python experiments/run_experiments.py --seed 42 --samples 8 --output-dir .verification/ci
+          python experiments/generate_report.py --input .verification/ci/experiment_results.json --output-dir .verification/ci
+          python experiments/generate_plots.py --input .verification/ci/experiment_results.json --output-dir .verification/ci/figures
+      - name: Bash syntax
+        if: runner.os == 'Linux'
+        run: bash -n openwhisk/deploy.sh
